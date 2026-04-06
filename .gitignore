@@ -1,0 +1,19 @@
+# Project Configuration
+
+## Build Output
+target/
+
+## IDE Files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+## OS Files
+.DS_Store
+Thumbs.db
+
+## Logs
+*.log
