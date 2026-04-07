@@ -23,6 +23,9 @@ public class BookingCrudTest {
     private static final String ADMIN_USER = "admin";
     private static final String ADMIN_PASSWORD = "password123";
 
+    // InfluxDB configuration
+    private static final String INFLUX_URL = "http://localhost:8086/write?db=jmeter";
+
     @Test
     @DisplayName("Should perform full CRUD cycle")
     public void testFullCrudCycle() throws Exception {
@@ -30,7 +33,7 @@ public class BookingCrudTest {
         AuthenticationActions authActions = new AuthenticationActions(AUTH_URL);
 
         TestPlanStats stats = testPlan(
-                threadGroup(1, 1,
+                threadGroup(1, 100,
                         authActions.authenticate(ADMIN_USER, ADMIN_PASSWORD),
                         apiClient.getAllBookings(),
                         apiClient.createBooking(BookingPayloads.createBookingPayload())
@@ -41,7 +44,8 @@ public class BookingCrudTest {
                         apiClient.updateBooking(BookingPayloads.updateBookingPayload()),
                         apiClient.deleteBooking(),
                         resultsTreeVisualizer()
-                )
+                ),
+                influxDbListener(INFLUX_URL)
         ).run();
 
         assertTrue(stats.overall().samplesCount() >= 6, "Test should execute at least 6 samples");

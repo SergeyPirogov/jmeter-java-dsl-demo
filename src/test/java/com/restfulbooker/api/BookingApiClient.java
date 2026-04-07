@@ -42,7 +42,7 @@ public class BookingApiClient {
      * Get a specific booking by ID
      */
     public DslHttpSampler getBooking(String bookingId) {
-        return httpSampler("Get Booking " + bookingId, baseUrl + "/booking/${bookingId}")
+        return httpSampler("Get Booking by ID", baseUrl + "/booking/${bookingId}")
                 .method("GET")
                 .header("Accept", "*/*");
     }
